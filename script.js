@@ -1,12 +1,9 @@
-// =================================================================
-// CONFIG — change this one line if your FastAPI server runs
-// somewhere other than the default local address.
-// =================================================================
-const API_BASE_URL = "http://127.0.0.1:8000";
 
-// -----------------------------------------------------------------
+const API_BASE_URL = "https://mental-health-score-predictor-op15.onrender.com/";
+
+
 // Element references
-// -----------------------------------------------------------------
+
 const form = document.getElementById("predictForm");
 const predictBtn = document.getElementById("predictBtn");
 const btnLabel = document.getElementById("btnLabel");
@@ -24,9 +21,9 @@ const errorMessage = document.getElementById("errorMessage");
 const statusDot = document.getElementById("statusDot");
 const statusText = document.getElementById("statusText");
 
-// -----------------------------------------------------------------
+
 // Check the backend is reachable (calls the existing GET "/" route)
-// -----------------------------------------------------------------
+
 async function checkApiStatus() {
   try {
     const res = await fetch(`${API_BASE_URL}/`);
@@ -41,11 +38,7 @@ async function checkApiStatus() {
 
 checkApiStatus();
 
-// -----------------------------------------------------------------
-// Build the JSON payload from the form.
-// Field names below match the FastAPI StudentData model EXACTLY —
-// do not rename these keys, the backend expects them as-is.
-// -----------------------------------------------------------------
+
 function buildPayload() {
   const data = new FormData(form);
 
@@ -65,18 +58,16 @@ function buildPayload() {
   };
 }
 
-// -----------------------------------------------------------------
+
 // UI state helpers
-// -----------------------------------------------------------------
+
 function setLoading(isLoading) {
   predictBtn.disabled = isLoading;
   btnSpinner.hidden = !isLoading;
   btnLabel.textContent = isLoading ? "Generating…" : "Generate score";
 }
 
-// Display-only bands for the gauge, assuming a 0-10 scale (see the
-// caveat about this range in the chat — adjust SCALE_MAX if your
-// model's target range is different).
+
 const SCALE_MAX = 10;
 const GAUGE_CIRCUMFERENCE = 2 * Math.PI * 58; // matches the SVG circle r=58
 const TIERS = [
@@ -118,9 +109,9 @@ function showError(message) {
   errorCard.hidden = false;
 }
 
-// -----------------------------------------------------------------
+
 // Submit handler
-// -----------------------------------------------------------------
+
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
   formError.hidden = true;
@@ -152,7 +143,7 @@ form.addEventListener("submit", async (event) => {
           detail = errBody.detail.map((d) => d.msg).join("; ");
         }
       } catch (_) {
-        // response had no JSON body — keep the generic message
+        
       }
       throw new Error(detail);
     }

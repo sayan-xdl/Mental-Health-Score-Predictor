@@ -1,6 +1,3 @@
-/* ---------------------------------------------------------------
-   Design tokens — deep indigo-navy, glass-panel style
-   --------------------------------------------------------------- */
 :root {
   --bg: #060A14;
   --surface: rgba(255, 255, 255, 0.035);
@@ -41,7 +38,7 @@ body {
 }
 
 /* ---------------------------------------------------------------
-   Header
+   Header 
    --------------------------------------------------------------- */
 .site-header {
   display: flex;
@@ -253,12 +250,7 @@ legend {
   background-position: calc(100% - 14px) center;
 }
 
-/* Explicit colours on the open dropdown list. Without this, many
-   browsers inherit the select's light text color into the popup
-   while keeping the OS's native (light) popup background — making
-   the options invisible. Forcing dark-on-light here guarantees the
-   list is readable everywhere, even though it looks different from
-   the dark closed box. */
+
 .field select option {
   background-color: #121A2E;
   color: #E9ECF6;
