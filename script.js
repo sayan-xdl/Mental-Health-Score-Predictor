@@ -1,5 +1,5 @@
 
-const API_BASE_URL = "https://mental-health-score-predictor-op15.onrender.com/";
+const API_BASE_URL = "https://mental-health-score-predictor-op15.onrender.com";
 
 
 // Element references
