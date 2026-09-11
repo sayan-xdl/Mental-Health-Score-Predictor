@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>OMNIMIND — Wellbeing Score Predictor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <div>
+        <p class="brand-name-header">OMNIMIND</p>
+        <p class="header-tagline">Where AI meets mental wellbeing.</p>
+        <p class="header-desc">An AI-powered tool that estimates a student's wellbeing score from everyday digital habits.</p>
+      </div>
+    </div>
+    <div class="api-status" id="apiStatus">
+      <span class="status-dot" id="statusDot"></span>
+      <span id="statusText">Connecting to model&hellip;</span>
+    </div>
+  </header>
+
+  <section class="hero">
+    <p class="brand-name">OMNIMIND</p>
+    <h1>See how habits map to a wellbeing <span class="grad-text">score</span></h1>
+    <p class="hero-sub">Enter a daily routine on the left and run the model on the right.</p>
+  </section>
+
+  <main class="layout">
+
+    <!-- LEFT: the form -->
+    <section class="form-panel">
+      <form id="predictForm" novalidate>
+
+        <fieldset>
+          <legend><span class="legend-dot"></span>Demographics</legend>
+
+          <div class="field">
+            <label for="age">Age</label>
+            <input type="number" id="age" name="age" min="10" max="100" step="1" required />
+            <p class="hint">Whole number, 10&ndash;100</p>
+          </div>
+
+          <div class="field">
+            <label for="gender">Gender</label>
+            <select id="gender" name="gender" required>
+              <option value="" disabled selected>Select&hellip;</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="country">Country</label>
+            <input type="text" id="country" name="country" list="countryList" placeholder="e.g. India" required />
+            <datalist id="countryList">
+              <option value="India"></option>
+              <option value="USA"></option>
+              <option value="Canada"></option>
+              <option value="Australia"></option>
+              <option value="UK"></option>
+              <option value="Germany"></option>
+              <option value="Mexico"></option>
+              <option value="Turkey"></option>
+              <option value="France"></option>
+              <option value="Other"></option>
+            </datalist>
+            <p class="hint">Any country &mdash; less common ones are grouped as "Other"</p>
+          </div>
+
+          <div class="field">
+            <label for="academic_level">Academic level</label>
+            <select id="academic_level" name="academic_level" required>
+              <option value="" disabled selected>Select&hellip;</option>
+              <option value="High School">High School</option>
+              <option value="Undergraduate">Undergraduate</option>
+              <option value="Graduate">Graduate</option>
+            </select>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend><span class="legend-dot"></span>Digital habits</legend>
+
+          <div class="field">
+            <label for="most_used_platform">Most used platform</label>
+            <select id="most_used_platform" name="most_used_platform" required>
+              <option value="" disabled selected>Select&hellip;</option>
+              <option value="Facebook">Facebook</option>
+              <option value="LinkedIn">LinkedIn</option>
+              <option value="Instagram">Instagram</option>
+              <option value="Snapchat">Snapchat</option>
+              <option value="Twitter">Twitter</option>
+              <option value="YouTube">YouTube</option>
+              <option value="TikTok">TikTok</option>
+              <option value="LINE">LINE</option>
+              <option value="KakaoTalk">KakaoTalk</option>
+              <option value="VKontakte">VKontakte</option>
+              <option value="WhatsApp">WhatsApp</option>
+              <option value="WeChat">WeChat</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="purpose_of_use">Primary social media activity</label>
+            <select id="purpose_of_use" name="purpose_of_use" required>
+              <option value="" disabled selected>Select&hellip;</option>
+              <option value="Networking">Networking</option>
+              <option value="Education">Education</option>
+              <option value="Entertainment">Entertainment</option>
+              <option value="News">News</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="avg_daily_usage_hours">Average daily social media usage (hours)</label>
+            <input type="number" id="avg_daily_usage_hours" name="avg_daily_usage_hours" min="0" max="24" step="0.1" required />
+          </div>
+
+          <div class="field">
+            <label for="daily_unlocks">Daily phone unlocks</label>
+            <input type="number" id="daily_unlocks" name="daily_unlocks" min="0" step="1" required />
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend><span class="legend-dot"></span>Lifestyle &amp; wellbeing</legend>
+
+          <div class="field">
+            <label for="study_hours">Study hours per day</label>
+            <input type="number" id="study_hours" name="study_hours" min="0" max="24" step="0.1" required />
+          </div>
+
+          <div class="field">
+            <label for="physical_activity_hours">Physical activity (hours/day)</label>
+            <input type="number" id="physical_activity_hours" name="physical_activity_hours" min="0" max="24" step="0.1" required />
+          </div>
+
+          <div class="field">
+            <label for="sleep_hours_per_night">Sleep per night (hours)</label>
+            <input type="number" id="sleep_hours_per_night" name="sleep_hours_per_night" min="0" max="24" step="0.1" required />
+          </div>
+
+          <div class="field">
+            <label for="stress_level">Stress level</label>
+            <select id="stress_level" name="stress_level" required>
+              <option value="" disabled selected>Select&hellip;</option>
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+              <option value="Very High">Very High</option>
+            </select>
+          </div>
+        </fieldset>
+
+        <div class="form-actions">
+          <p class="form-error" id="formError" hidden></p>
+          <button type="submit" id="predictBtn">
+            <span id="btnLabel">Generate score</span>
+            <span class="spinner" id="btnSpinner" hidden></span>
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- RIGHT: dedicated output section -->
+    <aside class="output-panel">
+      <p class="output-heading">Output</p>
+      <p class="output-desc">A live estimate generated from the values you provide, on a 0&ndash;10 scale.</p>
+
+      <div class="output-empty" id="outputEmpty">
+        <div class="waveform" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+        </div>
+        <p>Your prediction will appear here once you run the model.</p>
+      </div>
+
+      <div class="result-card" id="resultCard" hidden>
+        <div class="gauge">
+          <svg viewBox="0 0 140 140" class="gauge-svg">
+            <circle class="gauge-track" cx="70" cy="70" r="58" />
+            <circle class="gauge-progress" id="gaugeProgress" cx="70" cy="70" r="58" />
+          </svg>
+          <div class="gauge-center">
+            <p class="result-value" id="resultValue">&mdash;</p>
+            <span class="tier-badge" id="tierBadge">&mdash;</span>
+          </div>
+        </div>
+        <p class="result-label">Predicted wellbeing score, out of 10</p>
+      </div>
+
+      <div class="error-card" id="errorCard" hidden>
+        <p class="error-title">Prediction failed</p>
+        <p class="error-message" id="errorMessage"></p>
+      </div>
+
+      <div class="disclaimer">
+        <strong>Not a medical diagnosis.</strong> This score must never be
+        used to assess or treat a real mental health condition. If you're
+        struggling, please talk to a professional.
+      </div>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <p class="footer-about">
+      OMNIMIND estimates a student's wellbeing score from everyday habits
+      &mdash; screen time, sleep, study, and stress &mdash; using a trained
+      machine learning model running on the server.
+    </p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
