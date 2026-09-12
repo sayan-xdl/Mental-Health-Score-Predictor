@@ -7,8 +7,6 @@ from fastapi.middleware.cors import CORSMiddleware
 
 model = joblib.load("Mental_Health_Model.pkl")
 
-top_countries = ['Other','India','USA','Canada','Australia','UK','Germany','Mexico','Turkey','France']
-
 app = FastAPI()
 
 app.add_middleware(
@@ -18,12 +16,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 #Pydantic Model
 class StudentData(BaseModel):
     age                     : int = Field(...,ge=10,le=100)
     gender                  : Literal['Male','Female']
-    country                 : str
+    country                 : Literal['Other','India','USA','Canada','Australia','UK','Germany','Mexico','Turkey','France']
     academic_level          : Literal['Undergraduate', 'Graduate', 'High School']
     most_used_platform      : Literal['Facebook', 'LinkedIn', 'Instagram', 'Snapchat', 'Twitter',
     'YouTube', 'TikTok', 'LINE', 'KakaoTalk', 'VKontakte', 'WhatsApp','WeChat']
@@ -51,13 +48,10 @@ def greet():
 
 @app.post('/predict',response_model=PredictionResponse)
 def predict(data: StudentData):
-
-    country_group = data.country if data.country in top_countries else 'Other'
     
     input_row = pd.DataFrame([{
         'Age'                     :data.age,
         'Gender'                  :data.gender,
-        'Country'                 :data.country,
         'Academic_Level'          :data.academic_level,
         'Most_Used_Platform'      :data.most_used_platform,
         'Purpose_Of_Use'          :data.purpose_of_use,
@@ -67,7 +61,7 @@ def predict(data: StudentData):
         'Physical_Activity_Hours' :data.physical_activity_hours,
         'Sleep_Hours_Per_Night'   :data.sleep_hours_per_night,
         'Stress_Level'            :data.stress_level,
-        'Grouped_country'         :country_group
+        'Grouped_country'         :data.country
     }])
 
     prediction = model.predict(input_row)[0]

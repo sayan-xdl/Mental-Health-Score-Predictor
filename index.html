@@ -58,20 +58,20 @@
 
           <div class="field">
             <label for="country">Country</label>
-            <input type="text" id="country" name="country" list="countryList" placeholder="e.g. India" required />
-            <datalist id="countryList">
-              <option value="India"></option>
-              <option value="USA"></option>
-              <option value="Canada"></option>
-              <option value="Australia"></option>
-              <option value="UK"></option>
-              <option value="Germany"></option>
-              <option value="Mexico"></option>
-              <option value="Turkey"></option>
-              <option value="France"></option>
-              <option value="Other"></option>
-            </datalist>
-            <p class="hint">Any country &mdash; less common ones are grouped as "Other"</p>
+            <select id="country" name="country" required>
+              <option value="" disabled selected>Select&hellip;</option>
+              <option value="India">India</option>
+              <option value="USA">USA</option>
+              <option value="Canada">Canada</option>
+              <option value="Australia">Australia</option>
+              <option value="UK">UK</option>
+              <option value="Germany">Germany</option>
+              <option value="Mexico">Mexico</option>
+              <option value="Turkey">Turkey</option>
+              <option value="France">France</option>
+              <option value="Other">Other</option>
+            </select>
+            <p class="hint">Choose "Other" if your country isn't listed</p>
           </div>
 
           <div class="field">
