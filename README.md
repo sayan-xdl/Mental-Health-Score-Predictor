@@ -57,11 +57,25 @@ Hosted on **Render**:
   * **Start Command:** uvicorn main:app --host 0.0.0.0 --port $PORT.
 * **Frontend (Static Site):** Serves the user interface.
 
+##  Project Structure
+```
+Mental-Health-Score-Predictor/
+├── .gitignore
+├── ML_Project(Mental_Health_prediction).ipynb
+├── Mental_Health_Model.pkl
+├── README.md
+├── index.html
+├── main.py
+├── requirements.txt
+├── script.js
+└── style.css
+```
+
 ##  Disclaimer
 
 OMNIMIND is an experimental ML project. Its output is an estimated score, not a medical diagnosis. It must not be used to assess a real mental-health condition.
 
 ##  Author
 
-**Sayan** — [sghosh0529@gmail.com](mailto:sghosh0529@gmail.com)
+**Sayan** — sghosh0529@gmail.com
 
